@@ -718,6 +718,7 @@ module test_circles(size_x,
     }
 }
 
+// specify value between 1-4 to generate different project part
 jig_output_module        = 1;
 jig_size_x               = 162;
 jig_size_y               = 162;
@@ -726,7 +727,8 @@ pcb_size_x               = 40;
 pcb_size_y               = 40;
 
 module main() {
-    jig_lid_size_z	= 4;    
+    jig_lid_size_z	= 4;
+    // pcb width not yet retrieved automatically from kicad project
     pcb_size_z      = 1.60;
 
 /*
