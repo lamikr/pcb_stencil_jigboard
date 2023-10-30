@@ -718,14 +718,16 @@ module test_circles(size_x,
     }
 }
 
+jig_output_module        = 1;
+jig_size_x               = 162;
+jig_size_y               = 162;
+liftboard_frame_width    = 82;
+pcb_size_x               = 40;
+pcb_size_y               = 40;
+
 module main() {
-    jig_size_x                      = 162;
-    jig_size_y                      = 162;
-    jig_lid_size_z                  = 4;
-    liftboard_frame_margin_width    = 62;
-    pcb_size_x                      = 40;
-    pcb_size_y                      = 40;
-    pcb_size_z                      = 1.60;
+    jig_lid_size_z	= 4;    
+    pcb_size_z      = 1.60;
 
 /*
  * These are wanted to keep constant so that holes will
@@ -735,10 +737,10 @@ module main() {
  */
     pcb_holder_hole_positioning_width_x = jig_size_x - 42;   // 42 is the meaning of life
     pcb_holder_hole_positioning_width_y = jig_size_y - 42;
-   // liftboard_frame_margin_width
+   // liftboard_frame_width
     pcb_holder_size_z   = jig_lid_size_z;
-    pcb_holder_size_x   = jig_size_x - liftboard_frame_margin_width;
-    pcb_holder_size_y   = jig_size_y - liftboard_frame_margin_width;
+    pcb_holder_size_x   = jig_size_x - liftboard_frame_width;
+    pcb_holder_size_y   = jig_size_y - liftboard_frame_width;
     /* real pcb size that is fitted to pcb_holder */
     rounding_diameter   = 8;
     wasteboard_margin_size = 14.75;
@@ -771,93 +773,94 @@ module main() {
     spring_holder_inner_radius = 3.1;
     /* size of the hole reserver for vacuum pipe adapter on container */
     vacuum_pipe_hole_radius_mm  = 10;
-
-/*
-    pcb_lidboard(jig_size_x,
-        jig_size_y,
-        jig_lid_size_z,
-        rounding_diameter,
-        pcb_holder_hole_positioning_width_x,
-        pcb_holder_hole_positioning_width_y,
-        lidboard_wall_margin,
-        lidboard_wall_thickness,
-        lidboard_wall_height,
-        lift_hole_margin_from_wall,
-        lift_hole_diameter,
-        stencil_lifter_hole_diameter,
-        jig_lid_size_z,
-        stencil_lifter_hole_offset,
-        pcb_holder_hole_offset,
-        pcb_holder_size_x,
-        pcb_holder_size_y,
-        wasteboard_hole_marginal,
-        lift_hole_fitting_marginal);
-*/
-/*
-    pcb_stencil_liftboard(jig_size_x,
-					jig_size_y,
-					jig_lid_size_z,
-					rounding_diameter,
-                    pcb_holder_hole_positioning_width_x,
-                    pcb_holder_hole_positioning_width_y,
-                    lidboard_wall_margin,
-					lidboard_wall_thickness,
-					lift_hole_margin_from_wall,
-					lift_hole_diameter,
-					screw_head_hole_diameter,
-					screw_head_hole_height,
-					screw_body_hole_diameter,
-					screw_body_hole_height,
-					stencil_lifter_hole_diameter,
-					stencil_lifter_hole_offset,
-					pcb_holder_hole_offset,
-					pcb_holder_size_x,
-					pcb_holder_size_y,
-					wasteboard_hole_marginal,
-					pcb_holder_board_fitting_marginal,
-					lift_hole_fitting_marginal);
-*/
-    pcb_holderboard(jig_size_x,
-				jig_size_y,
-				jig_lid_size_z,
-				rounding_diameter,
-                pcb_holder_hole_positioning_width_x,
-                pcb_holder_hole_positioning_width_y,
-                lidboard_wall_margin,
-				lidboard_wall_thickness,
-				lift_hole_margin_from_wall,
-				lift_hole_diameter,
-				screw_head_hole_diameter,
-				screw_head_hole_height,
-				screw_body_hole_diameter,
-				screw_body_hole_height,
-				stencil_lifter_hole_diameter,
-				stencil_lifter_hole_offset,
-				pcb_holder_hole_offset,
-				pcb_holder_size_x,
-				pcb_holder_size_y,
-				pcb_holder_size_z,
-				pcb_size_x,
-                pcb_size_y,
-				pcb_size_z,
-				wasteboard_hole_marginal,
-				pcb_holder_board_fitting_marginal);
-
-/*
-*/
-    container_box(container_x,
-                container_y,
-                container_z,
-                rounding_diameter,
-                container_wall_width,
-                container_wall_margin,
-                spring_stand_height,
-                spring_stand_radius,
-                spring_holder_outer_height,
-                spring_holder_outer_radius,
-                spring_holder_inner_height,
-                spring_holder_inner_radius,
-                vacuum_pipe_hole_radius_mm);
+	
+	if (jig_output_module == 1) {
+		container_box(container_x,
+			container_y,
+			container_z,
+			rounding_diameter,
+			container_wall_width,
+			container_wall_margin,
+			spring_stand_height,
+			spring_stand_radius,
+			spring_holder_outer_height,
+			spring_holder_outer_radius,
+			spring_holder_inner_height,
+			spring_holder_inner_radius,
+			vacuum_pipe_hole_radius_mm);
+	}
+	if (jig_output_module == 2) {
+		pcb_lidboard(jig_size_x,
+			jig_size_y,
+			jig_lid_size_z,
+			rounding_diameter,
+			pcb_holder_hole_positioning_width_x,
+			pcb_holder_hole_positioning_width_y,
+			lidboard_wall_margin,
+			lidboard_wall_thickness,
+			lidboard_wall_height,
+			lift_hole_margin_from_wall,
+			lift_hole_diameter,
+			stencil_lifter_hole_diameter,
+			jig_lid_size_z,
+			stencil_lifter_hole_offset,
+			pcb_holder_hole_offset,
+			pcb_holder_size_x,
+			pcb_holder_size_y,
+			wasteboard_hole_marginal,
+			lift_hole_fitting_marginal);
+	}
+	if (jig_output_module == 3) {	
+		pcb_stencil_liftboard(jig_size_x,
+			jig_size_y,
+			jig_lid_size_z,
+			rounding_diameter,
+			pcb_holder_hole_positioning_width_x,
+			pcb_holder_hole_positioning_width_y,
+			lidboard_wall_margin,
+			lidboard_wall_thickness,
+			lift_hole_margin_from_wall,
+			lift_hole_diameter,
+			screw_head_hole_diameter,
+			screw_head_hole_height,
+			screw_body_hole_diameter,
+			screw_body_hole_height,
+			stencil_lifter_hole_diameter,
+			stencil_lifter_hole_offset,
+			pcb_holder_hole_offset,
+			pcb_holder_size_x,
+			pcb_holder_size_y,
+			wasteboard_hole_marginal,
+			pcb_holder_board_fitting_marginal,
+			lift_hole_fitting_marginal);
+	}
+	if (jig_output_module == 4) {
+		pcb_holderboard(jig_size_x,
+			jig_size_y,
+			jig_lid_size_z,
+			rounding_diameter,
+			pcb_holder_hole_positioning_width_x,
+			pcb_holder_hole_positioning_width_y,
+			lidboard_wall_margin,
+			lidboard_wall_thickness,
+			lift_hole_margin_from_wall,
+			lift_hole_diameter,
+			screw_head_hole_diameter,
+			screw_head_hole_height,
+			screw_body_hole_diameter,
+			screw_body_hole_height,
+			stencil_lifter_hole_diameter,
+			stencil_lifter_hole_offset,
+			pcb_holder_hole_offset,
+			pcb_holder_size_x,
+			pcb_holder_size_y,
+			pcb_holder_size_z,
+			pcb_size_x,
+			pcb_size_y,
+			pcb_size_z,
+			wasteboard_hole_marginal,
+			pcb_holder_board_fitting_marginal);
+	}
 /*
     test_circles(jig_size_x,
                 jig_size_y,
