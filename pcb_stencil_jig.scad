@@ -505,14 +505,14 @@ module pcb_holderboard_frames_to_remove(lidboard_size_x,
                                     lidboard_size_z,
                                     pcb_holder_size_x,
                                     pcb_holder_size_y,
-                                    pcb_board_fitting_marginal) {
+                                    pcb_holder_board_fitting_marginal) {
     
     margin_x = (lidboard_size_x - pcb_holder_size_x) / 2;
     margin_y = (lidboard_size_y - pcb_holder_size_y) / 2;
     difference() {
         cube([lidboard_size_x + cut_delta, lidboard_size_y, 8.0]);
-        translate([margin_x + pcb_board_fitting_marginal,
-                    margin_y + pcb_board_fitting_marginal,
+        translate([margin_x + pcb_holder_board_fitting_marginal,
+                    margin_y + pcb_holder_board_fitting_marginal,
                     -cut_delta]) {
             cube([pcb_holder_size_x,
                   pcb_holder_size_y,
@@ -544,8 +544,8 @@ module pcb_holderboard(lidboard_size_x,
 					pcb_size_x,
 					pcb_size_y,
 					pcb_size_z,
-					pcb_holder_hole_marginal,
-					pcb_board_fitting_marginal) {
+                    pcb_holder_board_hole_marginal,
+                    pcb_holder_board_fitting_marginal) {
     echo(lidboard_size_z=lidboard_size_z);
     echo(pcb_holder_size_z=pcb_holder_size_z);
     echo(pcb_size_z=pcb_size_z);
@@ -565,8 +565,8 @@ module pcb_holderboard(lidboard_size_x,
 						lidboard_size_y,
 						pcb_holder_hole_positioning_width_x,
 						pcb_holder_hole_positioning_width_y,
-						pcb_holder_hole_marginal,
-						pcb_holder_hole_marginal,
+                        pcb_holder_board_hole_marginal,
+                        pcb_holder_board_hole_marginal,
 						stencil_lifter_hole_diameter,
 						pcb_holder_size_z,
 						pcb_holder_hole_offset);
@@ -583,10 +583,10 @@ module pcb_holderboard(lidboard_size_x,
                             lidboard_size_z,
                             pcb_holder_size_x,
                             pcb_holder_size_y,
-                            pcb_board_fitting_marginal);
+                            pcb_holder_board_fitting_marginal);
         }
-        pcb_board_centered(pcb_size_x + pcb_board_fitting_marginal,
-                        pcb_size_y + pcb_board_fitting_marginal,
+        pcb_board_centered(pcb_size_x + pcb_holder_board_fitting_marginal,
+                        pcb_size_y + pcb_holder_board_fitting_marginal,
                         pcb_size_z,
                         lidboard_size_x,
                         lidboard_size_y,
@@ -719,7 +719,7 @@ module test_circles(size_x,
 }
 
 // specify value between 1-4 to generate different project part
-jig_output_module        = 1;
+jig_output_module        = 4;
 jig_size_x               = 162;
 jig_size_y               = 162;
 liftboard_frame_width    = 82;
@@ -749,7 +749,7 @@ module main() {
     stencil_lifter_hole_diameter = 3.5;
     stencil_lifter_hole_offset = 15;
     pcb_holder_hole_offset = 10;
-    wasteboard_hole_marginal = 8;
+    pcb_holder_board_hole_marginal = 8;
     lidboard_wall_margin = 2;
     lidboard_wall_thickness = 2;
     lidboard_wall_height = 5;
@@ -809,7 +809,7 @@ module main() {
 			pcb_holder_hole_offset,
 			pcb_holder_size_x,
 			pcb_holder_size_y,
-			wasteboard_hole_marginal,
+            pcb_holder_board_hole_marginal,
 			lift_hole_fitting_marginal);
 	}
 	if (jig_output_module == 3) {	
@@ -832,7 +832,7 @@ module main() {
 			pcb_holder_hole_offset,
 			pcb_holder_size_x,
 			pcb_holder_size_y,
-			wasteboard_hole_marginal,
+            pcb_holder_board_hole_marginal,
 			pcb_holder_board_fitting_marginal,
 			lift_hole_fitting_marginal);
 	}
@@ -860,7 +860,7 @@ module main() {
 			pcb_size_x,
 			pcb_size_y,
 			pcb_size_z,
-			wasteboard_hole_marginal,
+            pcb_holder_board_hole_marginal,
 			pcb_holder_board_fitting_marginal);
 	}
 /*
