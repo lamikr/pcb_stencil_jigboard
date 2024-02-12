@@ -26,24 +26,24 @@ module pcb_board_centered(pcb_size_x,
     }
 }
 
-module pcb_holder_holes(box_size_x,
+module pcb_holderboard_holes(box_size_x,
 				box_size_y,
-				pcb_holder_size_x,
-				pcb_holder_size_y,
+				pcb_holderboard_size_x,
+				pcb_holderboard_size_y,
 				box_clean_margin_x,
 				box_clean_margin_y,
 				hole_diameter,
 				hole_size_z,
 				hole_offset) {
-    hole_area_width = pcb_holder_size_x - 2 * box_clean_margin_x;
-    hole_area_height = pcb_holder_size_y - 2 * box_clean_margin_y;
+    hole_area_width = pcb_holderboard_size_x - 2 * box_clean_margin_x;
+    hole_area_height = pcb_holderboard_size_y - 2 * box_clean_margin_y;
     hole_count_x = floor(hole_area_width / hole_offset) + 1;
     hole_count_y = floor(hole_area_height / hole_offset) + 1;
         
-    start_x = ((box_size_x - pcb_holder_size_x) / 2) + (pcb_holder_size_x - (hole_count_x - 0) * hole_offset) / 2;
-    start_y = ((box_size_y - pcb_holder_size_y) / 2) + (pcb_holder_size_y - (hole_count_y - 0) * hole_offset) / 2;
+    start_x = ((box_size_x - pcb_holderboard_size_x) / 2) + (pcb_holderboard_size_x - (hole_count_x - 0) * hole_offset) / 2;
+    start_y = ((box_size_y - pcb_holderboard_size_y) / 2) + (pcb_holderboard_size_y - (hole_count_y - 0) * hole_offset) / 2;
     echo(box_size_x=box_size_x);
-    echo(pcb_holder_size_x=pcb_holder_size_x);
+    echo(pcb_holderboard_size_x=pcb_holderboard_size_x);
     echo(hole_diameter=hole_diameter);
     echo(start_x=start_x);
     echo(start_y=start_y);
@@ -370,8 +370,8 @@ module pcb_lidboard(lidboard_size_x,
 				lidboard_size_y,
 				lidboard_size_z,
 				wasteboard_corner_round_d,
-                pcb_holder_hole_positioning_width_x,
-                pcb_holder_hole_positioning_width_y,
+                pcb_holderboard_hole_positioning_width_x,
+                pcb_holderboard_hole_positioning_width_y,
 				wall_margin,
 				wall_width,
 				wall_height,
@@ -380,10 +380,10 @@ module pcb_lidboard(lidboard_size_x,
 				stencil_lifter_hole_diameter,
 				stencil_lifter_hole_size_z,
 				stencil_lifter_hole_offset,
-				pcb_holder_hole_offset,
-				pcb_holder_size_x,
-				pcb_holder_size_y,
-				pcb_holder_hole_marginal,
+				pcb_holderboard_hole_offset,
+				pcb_holderboard_size_x,
+				pcb_holderboard_size_y,
+				pcb_holderboard_hole_marginal,
                 lift_hole_fitting_marginal) {
     difference() {
         pcb_lidboard_frame(lidboard_size_x,
@@ -393,7 +393,7 @@ module pcb_lidboard(lidboard_size_x,
                         wall_margin,
                         wall_width, wall_height);
         wall_end_x = wall_margin + wall_width;
-        echo(pcb_holder_hole_marginal=pcb_holder_hole_marginal);
+        echo(pcb_holderboard_hole_marginal=pcb_holderboard_hole_marginal);
         /*
             calculate hole_center by using ideal 12.3 mm value 
             but add tolerance by making little larger (add 0.2mm to diameter)
@@ -404,15 +404,15 @@ module pcb_lidboard(lidboard_size_x,
                             lift_hole_diameter + lift_hole_fitting_marginal,
                             lidboard_size_z + 2 * cut_delta,
                             lidboard_size_x);
-        pcb_holder_holes(lidboard_size_x,
+        pcb_holderboard_holes(lidboard_size_x,
 					lidboard_size_y,
-					pcb_holder_hole_positioning_width_x,
-					pcb_holder_hole_positioning_width_y,
-					pcb_holder_hole_marginal,
-					pcb_holder_hole_marginal,
+					pcb_holderboard_hole_positioning_width_x,
+					pcb_holderboard_hole_positioning_width_y,
+					pcb_holderboard_hole_marginal,
+					pcb_holderboard_hole_marginal,
 					stencil_lifter_hole_diameter,
 					stencil_lifter_hole_size_z,
-					pcb_holder_hole_offset);
+					pcb_holderboard_hole_offset);
         margin_holes(lidboard_size_x,
 					lidboard_size_y,
 					stencil_lifter_hole_offset,
@@ -427,8 +427,8 @@ module pcb_stencil_liftboard(lidboard_size_x,
 							lidboard_size_y,
 							lidboard_size_z,
 							wasteboard_corner_round_d,
-                            pcb_holder_hole_positioning_width_x,
-                            pcb_holder_hole_positioning_width_y,
+                            pcb_holderboard_hole_positioning_width_x,
+                            pcb_holderboard_hole_positioning_width_y,
 							wall_margin,
 							wall_width,
 							lift_hole_margin,
@@ -439,15 +439,15 @@ module pcb_stencil_liftboard(lidboard_size_x,
 							screw_body_hole_height,
 							stencil_lifter_hole_diameter,
 							stencil_lifter_hole_offset,
-							pcb_holder_hole_offset,
-							pcb_holder_size_x,
-							pcb_holder_size_y,
-							pcb_holder_hole_marginal,
+							pcb_holderboard_hole_offset,
+							pcb_holderboard_size_x,
+							pcb_holderboard_size_y,
+							pcb_holderboard_hole_marginal,
 							pcb_board_fitting_marginal,
                             lift_hole_fitting_marginal) {
     wall_end_x = wall_margin + wall_width;
-    margin_x = (lidboard_size_x - pcb_holder_size_x) / 2;
-    margin_y = (lidboard_size_y - pcb_holder_size_y) / 2;
+    margin_x = (lidboard_size_x - pcb_holderboard_size_x) / 2;
+    margin_y = (lidboard_size_y - pcb_holderboard_size_y) / 2;
     difference() {
        pcb_stencil_liftboard_frame(lidboard_size_x,
                             lidboard_size_y,
@@ -459,15 +459,15 @@ module pcb_stencil_liftboard(lidboard_size_x,
                             lift_hole_diameter - lift_hole_fitting_marginal,
                             screw_body_hole_height,
                             lidboard_size_x);
-        pcb_holder_holes(lidboard_size_x,
+        pcb_holderboard_holes(lidboard_size_x,
 						lidboard_size_y,
-						pcb_holder_hole_positioning_width_x,
-						pcb_holder_hole_positioning_width_y,
-						pcb_holder_hole_marginal,
-						pcb_holder_hole_marginal,
+						pcb_holderboard_hole_positioning_width_x,
+						pcb_holderboard_hole_positioning_width_y,
+						pcb_holderboard_hole_marginal,
+						pcb_holderboard_hole_marginal,
 						stencil_lifter_hole_diameter,
 						lidboard_size_z,
-						pcb_holder_hole_offset);
+						pcb_holderboard_hole_offset);
         // screw head area
         translate([0, 0, -cut_delta]) {
 			create_corner_cylinders(wall_end_x,
@@ -492,8 +492,8 @@ module pcb_stencil_liftboard(lidboard_size_x,
                     lidboard_size_z,
                     stencil_lifter_hole_offset);
         translate([margin_x, margin_y, -cut_delta]) {
-            cube([pcb_holder_size_x + 2 * pcb_board_fitting_marginal,
-                  pcb_holder_size_y + 2 * pcb_board_fitting_marginal, 8]);
+            cube([pcb_holderboard_size_x + 2 * pcb_board_fitting_marginal,
+                  pcb_holderboard_size_y + 2 * pcb_board_fitting_marginal, 8]);
         }
         /*
         */
@@ -503,19 +503,19 @@ module pcb_stencil_liftboard(lidboard_size_x,
 module pcb_holderboard_frames_to_remove(lidboard_size_x,
                                     lidboard_size_y,
                                     lidboard_size_z,
-                                    pcb_holder_size_x,
-                                    pcb_holder_size_y,
-                                    pcb_holder_board_fitting_marginal) {
-    
-    margin_x = (lidboard_size_x - pcb_holder_size_x) / 2;
-    margin_y = (lidboard_size_y - pcb_holder_size_y) / 2;
+                                    pcb_holderboard_size_x,
+                                    pcb_holderboard_size_y,pcb_holderboard_fitting_marginal) {
+    fitting_marginal_half = pcb_holderboard_fitting_marginal / 2;
+                                        
+    margin_x = (lidboard_size_x - pcb_holderboard_size_x - fitting_marginal_half) / 2;
+    margin_y = (lidboard_size_y - pcb_holderboard_size_y - fitting_marginal_half) / 2;
     difference() {
         cube([lidboard_size_x + cut_delta, lidboard_size_y, 8.0]);
-        translate([margin_x + pcb_holder_board_fitting_marginal,
-                    margin_y + pcb_holder_board_fitting_marginal,
-                    -cut_delta]) {
-            cube([pcb_holder_size_x,
-                  pcb_holder_size_y,
+        translate([margin_x,
+                   margin_y,
+                   -cut_delta]) {
+            cube([pcb_holderboard_size_x + fitting_marginal_half,
+                  pcb_holderboard_size_y + fitting_marginal_half,
                   lidboard_size_z + cut_delta]);
         }
     }
@@ -525,8 +525,8 @@ module pcb_holderboard(lidboard_size_x,
 					lidboard_size_y,
 					lidboard_size_z,
 					wasteboard_corner_round_d,
-                    pcb_holder_hole_positioning_width_x,
-                    pcb_holder_hole_positioning_width_y,
+                    pcb_holderboard_hole_positioning_width_x,
+                    pcb_holderboard_hole_positioning_width_y,
 					wall_margin,
 					wall_width,
 					lift_hole_margin,
@@ -537,23 +537,23 @@ module pcb_holderboard(lidboard_size_x,
 					screw_body_hole_height,
 					stencil_lifter_hole_diameter,
 					stencil_lifter_hole_offset,
-					pcb_holder_hole_offset,
-					pcb_holder_size_x,
-					pcb_holder_size_y,
-					pcb_holder_size_z,
+					pcb_holderboard_hole_offset,
+					pcb_holderboard_size_x,
+					pcb_holderboard_size_y,
+					pcb_holderboard_size_z,
 					pcb_size_x,
 					pcb_size_y,
 					pcb_size_z,
-                    pcb_holder_board_hole_marginal,
-                    pcb_holder_board_fitting_marginal) {
+                    pcb_holderboard_hole_marginal,
+                    pcb_holderboard_fitting_marginal) {
     echo(lidboard_size_z=lidboard_size_z);
-    echo(pcb_holder_size_z=pcb_holder_size_z);
+    echo(pcb_holderboard_size_z=pcb_holderboard_size_z);
     echo(pcb_size_z=pcb_size_z);
     wall_end_x = wall_margin + wall_width;
     difference() {
         pcb_stencil_liftboard_frame(lidboard_size_x,
                         lidboard_size_y,
-                        pcb_holder_size_z,
+                        pcb_holderboard_size_z,
                         wasteboard_corner_round_d,
                         wall_end_x,
                         lift_hole_margin,
@@ -561,36 +561,37 @@ module pcb_holderboard(lidboard_size_x,
                         lift_hole_diameter,
                         screw_body_hole_height,
                         lidboard_size_x);
-        pcb_holder_holes(lidboard_size_x,
+        pcb_holderboard_holes(lidboard_size_x,
 						lidboard_size_y,
-						pcb_holder_hole_positioning_width_x,
-						pcb_holder_hole_positioning_width_y,
-                        pcb_holder_board_hole_marginal,
-                        pcb_holder_board_hole_marginal,
+						pcb_holderboard_hole_positioning_width_x,
+						pcb_holderboard_hole_positioning_width_y,
+                        pcb_holderboard_hole_marginal,
+                        pcb_holderboard_hole_marginal,
 						stencil_lifter_hole_diameter,
-						pcb_holder_size_z,
-						pcb_holder_hole_offset);
+						pcb_holderboard_size_z,
+						pcb_holderboard_hole_offset);
         margin_holes(lidboard_size_x,
                         lidboard_size_y,
                         stencil_lifter_hole_offset,
                         stencil_lifter_hole_offset,
                         stencil_lifter_hole_diameter,
-                        pcb_holder_size_z,
+                        pcb_holderboard_size_z,
                         stencil_lifter_hole_offset);
         translate([0, 0, 2 * -cut_delta]) {
-            pcb_holderboard_frames_to_remove(lidboard_size_x,
+            pcb_holderboard_frames_to_remove(
+                            lidboard_size_x,
                             lidboard_size_y,
                             lidboard_size_z,
-                            pcb_holder_size_x,
-                            pcb_holder_size_y,
-                            pcb_holder_board_fitting_marginal);
+                            pcb_holderboard_size_x,
+                            pcb_holderboard_size_y,
+                            pcb_holderboard_fitting_marginal);
         }
-        pcb_board_centered(pcb_size_x + pcb_holder_board_fitting_marginal,
-                        pcb_size_y + pcb_holder_board_fitting_marginal,
+        pcb_board_centered(pcb_size_x + pcb_holderboard_fitting_marginal,
+                        pcb_size_y + pcb_holderboard_fitting_marginal,
                         pcb_size_z,
                         lidboard_size_x,
                         lidboard_size_y,
-                        pcb_holder_size_z);
+                        pcb_holderboard_size_z);
     }
 }
 
@@ -730,26 +731,25 @@ module main() {
     jig_lid_size_z	= 4;
     // pcb width not yet retrieved automatically from kicad project
     pcb_size_z      = 1.60;
-
 /*
  * These are wanted to keep constant so that holes will
    always be on same place on lidboard, liftboard and holderboard
    even if the frame size of liftboard changes. (and thus also the holderboard
    size that is inside of liftboard)
  */
-    pcb_holder_hole_positioning_width_x = jig_size_x - 42;   // 42 is the meaning of life
-    pcb_holder_hole_positioning_width_y = jig_size_y - 42;
+    pcb_holderboard_hole_positioning_width_x = jig_size_x - 42;   // 42 is the meaning of life
+    pcb_holderboard_hole_positioning_width_y = jig_size_y - 42;
    // liftboard_frame_width
-    pcb_holder_size_z   = jig_lid_size_z;
-    pcb_holder_size_x   = jig_size_x - liftboard_frame_width;
-    pcb_holder_size_y   = jig_size_y - liftboard_frame_width;
+    pcb_holderboard_size_z   = jig_lid_size_z;
+    pcb_holderboard_size_x   = jig_size_x - liftboard_frame_width;
+    pcb_holderboard_size_y   = jig_size_y - liftboard_frame_width;
     /* real pcb size that is fitted to pcb_holder */
     rounding_diameter   = 8;
     wasteboard_margin_size = 14.75;
     stencil_lifter_hole_diameter = 3.5;
     stencil_lifter_hole_offset = 15;
-    pcb_holder_hole_offset = 10;
-    pcb_holder_board_hole_marginal = 8;
+    pcb_holderboard_hole_offset = 10;
+    pcb_holderboard_hole_marginal = 8;
     lidboard_wall_margin = 2;
     lidboard_wall_thickness = 2;
     lidboard_wall_height = 5;
@@ -759,7 +759,7 @@ module main() {
     screw_head_hole_height  = 3.5;
     screw_body_hole_diameter  = 3.1;
     screw_body_hole_height  = 7.5;
-    pcb_holder_board_fitting_marginal = 1.0;
+    pcb_holderboard_fitting_marginal = 1.0;
     lift_hole_fitting_marginal = 1.0;
     container_x = jig_size_x;
     container_y = jig_size_y;
@@ -796,8 +796,8 @@ module main() {
 			jig_size_y,
 			jig_lid_size_z,
 			rounding_diameter,
-			pcb_holder_hole_positioning_width_x,
-			pcb_holder_hole_positioning_width_y,
+			pcb_holderboard_hole_positioning_width_x,
+			pcb_holderboard_hole_positioning_width_y,
 			lidboard_wall_margin,
 			lidboard_wall_thickness,
 			lidboard_wall_height,
@@ -806,10 +806,10 @@ module main() {
 			stencil_lifter_hole_diameter,
 			jig_lid_size_z,
 			stencil_lifter_hole_offset,
-			pcb_holder_hole_offset,
-			pcb_holder_size_x,
-			pcb_holder_size_y,
-            pcb_holder_board_hole_marginal,
+			pcb_holderboard_hole_offset,
+			pcb_holderboard_size_x,
+			pcb_holderboard_size_y,
+            pcb_holderboard_hole_marginal,
 			lift_hole_fitting_marginal);
 	}
 	if (jig_output_module == 3) {	
@@ -817,8 +817,8 @@ module main() {
 			jig_size_y,
 			jig_lid_size_z,
 			rounding_diameter,
-			pcb_holder_hole_positioning_width_x,
-			pcb_holder_hole_positioning_width_y,
+			pcb_holderboard_hole_positioning_width_x,
+			pcb_holderboard_hole_positioning_width_y,
 			lidboard_wall_margin,
 			lidboard_wall_thickness,
 			lift_hole_margin_from_wall,
@@ -829,11 +829,11 @@ module main() {
 			screw_body_hole_height,
 			stencil_lifter_hole_diameter,
 			stencil_lifter_hole_offset,
-			pcb_holder_hole_offset,
-			pcb_holder_size_x,
-			pcb_holder_size_y,
-            pcb_holder_board_hole_marginal,
-			pcb_holder_board_fitting_marginal,
+			pcb_holderboard_hole_offset,
+			pcb_holderboard_size_x,
+			pcb_holderboard_size_y,
+            pcb_holderboard_hole_marginal,
+			pcb_holderboard_fitting_marginal,
 			lift_hole_fitting_marginal);
 	}
 	if (jig_output_module == 4) {
@@ -841,8 +841,8 @@ module main() {
 			jig_size_y,
 			jig_lid_size_z,
 			rounding_diameter,
-			pcb_holder_hole_positioning_width_x,
-			pcb_holder_hole_positioning_width_y,
+			pcb_holderboard_hole_positioning_width_x,
+			pcb_holderboard_hole_positioning_width_y,
 			lidboard_wall_margin,
 			lidboard_wall_thickness,
 			lift_hole_margin_from_wall,
@@ -853,15 +853,15 @@ module main() {
 			screw_body_hole_height,
 			stencil_lifter_hole_diameter,
 			stencil_lifter_hole_offset,
-			pcb_holder_hole_offset,
-			pcb_holder_size_x,
-			pcb_holder_size_y,
-			pcb_holder_size_z,
+			pcb_holderboard_hole_offset,
+			pcb_holderboard_size_x,
+			pcb_holderboard_size_y,
+			pcb_holderboard_size_z,
 			pcb_size_x,
 			pcb_size_y,
 			pcb_size_z,
-            pcb_holder_board_hole_marginal,
-			pcb_holder_board_fitting_marginal);
+            pcb_holderboard_hole_marginal,
+			pcb_holderboard_fitting_marginal);
 	}
 /*
     test_circles(jig_size_x,
