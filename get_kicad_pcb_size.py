@@ -62,8 +62,8 @@ if len(sys.argv) == 2:
 		param_output_base = str(jig_size_x) + 'x' + str(jig_size_x);
 		param_cntr_box_name_base = 'container_box_' + param_output_base;
 		param_lidboard_name_base = 'lidboard_' + param_output_base;
-		param_stencil_lifter_name_base = 'stencil_lifter_' + param_output_base + '_' + str(liftboard_frame_width);
-		param_pcb_holder_name_base = 'pcb_holder_' + param_output_base + '_' + str(liftboard_frame_width) + '_' + str(int(pcb_size_x_mm)) + 'x' + str(int(pcb_size_y_mm));
+		param_stencil_lifter_name_base = 'stencil_lifter_frame_' + param_output_base + '_' + str(liftboard_frame_width);
+		param_pcb_holder_name_base = 'pcb_holderboard_' + param_output_base + '_' + str(liftboard_frame_width) + '_' + str(int(pcb_size_x_mm)) + 'x' + str(int(pcb_size_y_mm));
 		
 		subprocess.Popen([openscad_exec,
 					param_jig_size_x,
