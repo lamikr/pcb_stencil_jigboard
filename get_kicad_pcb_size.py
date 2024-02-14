@@ -14,8 +14,14 @@ import pcbnew
 import math
 import subprocess
 
-def roundup_twenty(x):
+def round_up_by_twenty(x):
     return math.ceil(x / 20.0) * 20
+
+def round_down_by_ten(x):
+    return math.floor(x / 10.0) * 10
+
+def round_down_by_ten_remainder(x):
+    return x - math.floor(x / 10) * 10
 
 edge_found	= 0
 if len(sys.argv) == 2:
@@ -46,12 +52,16 @@ if len(sys.argv) == 2:
 		pcb_size_y_mm	= round((pcb_size_y_mm + 2), 0);
 		pcb_size_max	= max(pcb_size_x_mm, pcb_size_y_mm)
 		print("pcb_size_max:", round(pcb_size_max, 1), "mm")
-		pcb_board_size	= roundup_twenty(pcb_size_max)
+		pcb_board_size	= round_up_by_twenty(pcb_size_max)
 		if ((pcb_board_size - pcb_size_max) < 5):
 			pcb_board_size	= pcb_board_size + 20
 		print("pcb_board_size:", round(pcb_board_size, 1), "mm")
 		liftboard_frame_width	= 62;
-		jig_size_x	= pcb_board_size + liftboard_frame_width;
+		temp_size_x = pcb_board_size + liftboard_frame_width;
+		temp_sz_x_div = round_down_by_ten(temp_size_x);
+		temp_sz_x_rem = round_down_by_ten_remainder(temp_size_x);
+		jig_size_x	= round_up_by_twenty(temp_sz_x_div) + temp_sz_x_rem;
+		print("temp_size_x: ", temp_size_x, ", temp_sz_x_div: ", temp_sz_x_div, ", temp_sz_x_rem: ", temp_sz_x_rem, ", jig_size_x: ", jig_size_x);
 		print("jig_size_x:", round(jig_size_x, 1), "mm")
 		openscad_exec = 'openscad'
 		param_jig_size_x = '-D jig_size_x=' + str(jig_size_x);
