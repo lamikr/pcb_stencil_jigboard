@@ -10,9 +10,15 @@
 # height: 29.0 mm
 
 import sys
+import os
 import pcbnew
 import math
 import subprocess
+
+CONST_MAX_JIG_SIZE_MM=162
+CONST_DEFAULT_FRAME_SIZE_MM=82
+CONST_MIN_FRAME_SIZE_MM=42
+CONST_SIZE_ADJUST_MM=20
 
 def round_up_by_twenty(x):
     return math.ceil(x / 20.0) * 20
@@ -52,17 +58,32 @@ if len(sys.argv) == 2:
 		pcb_size_y_mm	= round((pcb_size_y_mm + 2), 0);
 		pcb_size_max	= max(pcb_size_x_mm, pcb_size_y_mm)
 		print("pcb_size_max:", round(pcb_size_max, 1), "mm")
-		pcb_board_size	= round_up_by_twenty(pcb_size_max)
-		if ((pcb_board_size - pcb_size_max) < 5):
-			pcb_board_size	= pcb_board_size + 20
-		print("pcb_board_size:", round(pcb_board_size, 1), "mm")
-		liftboard_frame_width	= 82;
-		temp_size_x = pcb_board_size + liftboard_frame_width;
-		temp_sz_x_div = round_down_by_ten(temp_size_x);
-		temp_sz_x_rem = round_down_by_ten_remainder(temp_size_x);
-		jig_size_x	= round_up_by_twenty(temp_sz_x_div) + temp_sz_x_rem;
+		pcb_boardholder_size	= round_up_by_twenty(pcb_size_max)
+		if ((pcb_boardholder_size - pcb_size_max) < 5):
+			pcb_boardholder_size	= pcb_boardholder_size + CONST_SIZE_ADJUST_MM
+		print("pcb_boardholder_size:", round(pcb_boardholder_size, 1), "mm")
+		jig_size_set = False
+		liftboard_frame_width = CONST_DEFAULT_FRAME_SIZE_MM;
+		while (True):
+			temp_size_x = pcb_boardholder_size + liftboard_frame_width;
+			temp_sz_x_div = round_down_by_ten(temp_size_x);
+			temp_sz_x_rem = round_down_by_ten_remainder(temp_size_x);
+			jig_size_x	= round_up_by_twenty(temp_sz_x_div) + temp_sz_x_rem;
+			if (jig_size_x > CONST_MAX_JIG_SIZE_MM):
+				liftboard_frame_width = liftboard_frame_width - CONST_SIZE_ADJUST_MM;
+				if (liftboard_frame_width < CONST_MIN_FRAME_SIZE_MM):
+					print("Error, max jig size:", CONST_MAX_JIG_SIZE_MM, "mm")
+					print("  liftboard_frame_width:", (liftboard_frame_width + CONST_SIZE_ADJUST_MM), "mm")
+					print("  min liftboard_frame_width:", CONST_MIN_FRAME_SIZE_MM, "mm")
+					print("  jig_size = pcb_boardholder_size + liftboard_frame_width =", (pcb_boardholder_size + liftboard_frame_width + CONST_SIZE_ADJUST_MM), "mm")
+					os._exit(1)
+			else:
+				# success, exit from while loop
+				break
 		print("temp_size_x: ", temp_size_x, ", temp_sz_x_div: ", temp_sz_x_div, ", temp_sz_x_rem: ", temp_sz_x_rem, ", jig_size_x: ", jig_size_x);
+		print("liftboard_frame_width:", liftboard_frame_width, "mm")
 		print("jig_size_x:", round(jig_size_x, 1), "mm")
+		os._exit(0)
 		openscad_exec = 'openscad'
 		param_jig_size_x = '-D jig_size_x=' + str(jig_size_x);
 		param_jig_size_y = '-D jig_size_y=' + str(jig_size_x);
