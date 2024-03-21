@@ -56,7 +56,7 @@ if len(sys.argv) == 2:
 		if ((pcb_board_size - pcb_size_max) < 5):
 			pcb_board_size	= pcb_board_size + 20
 		print("pcb_board_size:", round(pcb_board_size, 1), "mm")
-		liftboard_frame_width	= 62;
+		liftboard_frame_width	= 82;
 		temp_size_x = pcb_board_size + liftboard_frame_width;
 		temp_sz_x_div = round_down_by_ten(temp_size_x);
 		temp_sz_x_rem = round_down_by_ten_remainder(temp_size_x);

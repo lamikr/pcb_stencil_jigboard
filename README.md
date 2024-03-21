@@ -7,7 +7,7 @@ This project offers a 3d printable jig that that can be used as a help when you 
 Jig consist of from 4 different parts that can be generated and exported easily with the openscad by modifying the parameters close to main function. Alrernatively, the project will try to generate model parts automatically from the Kicad project if you give the kicad_pcb file as a parameters so that it can check the PCB size in a following way for example:
 
 ```
-./generate_jig_from_kicad_pcb_file.py ~/nokia/bell_labs/led_test/led_test.kicad_pcb
+./generate_pcb_stencil_jigboard.py ~/nokia/bell_labs/led_test/led_test.kicad_pcb
 ```
 
 Execution of this script will check the size of the PCB from kicad_pcb project file and then invoke the openscad project to generate 4 stl files on optimal size required for the JIG. Project aims to generate files in a way that for PCB's which size is close to each other will always try to use the same size container_box, lidboard and stencil_lift frame so that only the pcb_holder board is PCB/project specific. This adds reusability for the projects and reduces the time required for printing 3d model parts. (JIG size is increased on 20 mm steps if needed)
@@ -54,9 +54,7 @@ PCB STENCIL JIG project is licensed under the GNU Lesser General Public License 
 
 ## Contact Information
 
-Mika Laitio / Nokia Bell Labs. You can best reach me from my private email address: lamikr@gmail.com
-
-It's always nice to get some feedback and improvement suggestions if you end up trying out this project.
+Mika Laitio / Nokia Bell Labs. You can reach me from my private email address: lamikr@gmail.com
 
 ## Credits
 
